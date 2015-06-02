@@ -1,6 +1,7 @@
 task deploy(type:Exec){
+	dependsOn createReleaseTag
 	executable "git"
 	args "push", "heroku", "master"
 }
 
-afterReleaseBuild.dependsOn deploy
+updateVersion.dependsOn deploy
