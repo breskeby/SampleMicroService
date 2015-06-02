@@ -15,7 +15,6 @@ public class Application {
             webPort = "8080";
         }
         System.setProperty("server.port", webPort);
-
         ApplicationContext ctx = SpringApplication.run(Application.class, args);
 
         System.out.println("Let's inspect the beans provided by Spring Boot:");
