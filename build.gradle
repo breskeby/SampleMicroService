@@ -14,6 +14,7 @@ plugins {
 apply plugin: 'groovy'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
+apply from: 'gradle/smoketests.gradle'
 apply from: "gradle/autoversioning.gradle"
 apply from: "gradle/herokuDeploy.gradle"
 
@@ -22,8 +23,8 @@ repositories {
     jcenter()
 }
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 dependencies {
     compile "org.codehaus.groovy:groovy-all:2.3.10"
@@ -34,6 +35,12 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-actuator"
     testCompile "junit:junit"
 	testCompile "org.springframework.boot:spring-boot-starter-test"
+
+    smokeTestCompile "org.gebish:geb-core:0.9.3"
+    smokeTestCompile "org.seleniumhq.selenium:selenium-chrome-driver:2.41.0"
+    smokeTestCompile "org.seleniumhq.selenium:selenium-support:2.41.0"
+    smokeTestCompile "org.gebish:geb-spock:0.9.3"
+    smokeTestCompile "org.spockframework:spock-core:1.0-groovy-2.3"
 }
 
 processResources {

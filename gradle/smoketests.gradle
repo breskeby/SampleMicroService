@@ -1,0 +1,79 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+import org.apache.commons.io.FileUtils
+
+buildscript {
+	repositories {
+		jcenter()
+	}
+	dependencies {
+		classpath "commons-io:commons-io:2.4"
+	}
+}
+
+ext.chromeDriverVersion = '2.14'
+
+task downloadChromeDriver {
+	def outputFile = file("$buildDir/webdriver/chromedriver.zip")
+	inputs.property("chromeDriverVersion", chromeDriverVersion)
+	outputs.file(outputFile)
+
+	doLast {
+		def driverOsFilenamePart
+		if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+			driverOsFilenamePart = "win32"
+		} else if (Os.isFamily(Os.FAMILY_MAC)) {
+			driverOsFilenamePart = "mac32"
+		} else if (Os.isFamily(Os.FAMILY_UNIX)) {
+			driverOsFilenamePart = Os.isArch("amd64") ? "linux64" : "linux32"
+		}
+		FileUtils.copyURLToFile(new URL("http://chromedriver.storage.googleapis.com/${chromeDriverVersion}/chromedriver_${driverOsFilenamePart}.zip"), outputFile)
+	}
+}
+
+task unzipChromeDriver(type: Copy) {
+	def outputDir = file("$buildDir/webdriver/chromedriver")
+	dependsOn downloadChromeDriver
+	outputs.dir(outputDir)
+
+	from(zipTree(downloadChromeDriver.outputs.files.singleFile))
+	into(outputDir)
+}
+
+sourceSets {
+    smokeTest {
+        compileClasspath += main.output + test.output
+        runtimeClasspath += main.output + test.output
+    }
+}
+
+configurations {
+    smokeTestCompile.extendsFrom testCompile
+    smokeTestRuntime.extendsFrom testRuntime
+}
+
+plugins.withType(org.gradle.plugins.ide.idea.IdeaPlugin) { // lazy as plugin not applied yet
+    idea {
+        module {
+            testSourceDirs += sourceSets.smokeTest.groovy.srcDirs
+            testSourceDirs += sourceSets.smokeTest.resources.srcDirs
+            scopes.TEST.plus.add(configurations.smokeTestCompile)
+            scopes.TEST.plus.add(configurations.smokeTestRuntime)
+        }
+    }
+}
+
+task smokeTest(type:Test) {
+    classpath = sourceSets.smokeTest.runtimeClasspath
+    testClassesDir = sourceSets.smokeTest.output.classesDir
+
+	dependsOn unzipChromeDriver
+
+    def chromedriverFilename = Os.isFamily(Os.FAMILY_WINDOWS) ? "chromedriver.exe" : "chromedriver"
+    systemProperty "webdriver.chrome.driver", new File(unzipChromeDriver.outputs.files.singleFile, chromedriverFilename).absolutePath
+
+
+    reports {
+        html.destination = reporting.file("$name/tests")
+        junitXml.destination = file("$buildDir/test-results/$name")
+    }
+}
