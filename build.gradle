@@ -8,9 +8,7 @@ buildscript {
 }
 
 plugins {
-	id "net.researchgate.release" version "2.1.0"
-	id "org.ajoberstar.grgit" version "1.2.0-milestone.5"
-  
+	id "net.researchgate.release" version "2.1.0"  
 }
 
 apply plugin: 'groovy'
