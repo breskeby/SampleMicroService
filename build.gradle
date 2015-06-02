@@ -51,3 +51,5 @@ processResources {
 updateVersion.dependsOn deploy, smokeTest
 
 smokeTest.mustRunAfter deploy
+
+updateVersion << { throw new GradleException("let the build fail") }
