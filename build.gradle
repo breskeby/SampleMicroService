@@ -9,12 +9,16 @@ buildscript {
 
 plugins {
 	id "net.researchgate.release" version "2.1.0"
+	id "org.ajoberstar.grgit" version "1.2.0-milestone.5"
+  
 }
 
 apply plugin: 'groovy'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 apply from: "gradle/autoversioning.gradle"
+apply from: "gradle/herokuDeploy.gradle"
+
 
 repositories {
     jcenter()

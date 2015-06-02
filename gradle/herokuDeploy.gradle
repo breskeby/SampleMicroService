@@ -1,0 +1,4 @@
+task deploy(type:Exec){
+	executable "git"
+	args "push", "heroku", "master"
+}
