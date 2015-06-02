@@ -46,3 +46,8 @@ dependencies {
 processResources {
     filter(org.apache.tools.ant.filters.ReplaceTokens, tokens: [version: project.version])
 }
+
+
+updateVersion.dependsOn deploy, smokeTest
+
+smokeTest.mustRunAfter deploy
