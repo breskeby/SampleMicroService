@@ -1,4 +1,4 @@
-def semanticVersion = SemanticVersion.from(version)
+ext.semanticVersion = SemanticVersion.from(version)
 project.ext.'gradle.release.useAutomaticVersion' = 'true' 
 project.ext.releaseVersion=semanticVersion.releaseVersion()
 project.ext.newVersion=semanticVersion.newVersion()

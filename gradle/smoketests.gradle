@@ -61,8 +61,8 @@ plugins.withType(org.gradle.plugins.ide.idea.IdeaPlugin) { // lazy as plugin not
     }
 }
 
-task smokeTest(type:Test) {
-	systemProperty "expectedVersion", project.version
+task smokeTestRelease(type:Test) {
+	systemProperty "expectedVersion", semanticVersion.releaseVersion()
     classpath = sourceSets.smokeTest.runtimeClasspath
     testClassesDir = sourceSets.smokeTest.output.classesDir
 

@@ -14,8 +14,8 @@ plugins {
 apply plugin: 'groovy'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
-apply from: 'gradle/smoketests.gradle'
 apply from: "gradle/autoversioning.gradle"
+apply from: 'gradle/smoketests.gradle'
 apply from: "gradle/herokuDeploy.gradle"
 
 
@@ -64,6 +64,5 @@ processResources {
 }
 
 
-updateVersion.dependsOn deploy, smokeTest
-
-smokeTest.mustRunAfter deploy
+updateVersion.dependsOn deploy, smokeTestRelease
+smokeTestRelease.mustRunAfter deploy
