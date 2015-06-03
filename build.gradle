@@ -49,9 +49,14 @@ dependencies {
 }
 
 processResources {
-    filter(org.apache.tools.ant.filters.ReplaceTokens, 
+	def revision = file(".git/refs/heads/master").text
+	
+	inputs.property "version", project.version
+    inputs.property "revision", revision
+
+	filter(org.apache.tools.ant.filters.ReplaceTokens, 
 		tokens: [version: project.version,
-				 revision: file(".git/refs/heads/master").text]
+				 revision: revision]
 	)
 }
 
