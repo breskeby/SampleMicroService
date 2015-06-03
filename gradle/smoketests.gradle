@@ -41,8 +41,8 @@ task unzipChromeDriver(type: Copy) {
 
 sourceSets {
     smokeTest {
-        compileClasspath += main.output + test.output
-        runtimeClasspath += main.output + test.output
+        compileClasspath += test.output
+        runtimeClasspath += files("build/libs") + test.output
     }
 }
 
