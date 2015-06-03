@@ -62,9 +62,7 @@ plugins.withType(org.gradle.plugins.ide.idea.IdeaPlugin) { // lazy as plugin not
 }
 
 task smokeTest(type:Test) {
-	doFirst {
-		println sourceSets.smokeTest.runtimeClasspath.asPath
-	}
+	systemProperty "expectedVersion", project.version
     classpath = sourceSets.smokeTest.runtimeClasspath
     testClassesDir = sourceSets.smokeTest.output.classesDir
 

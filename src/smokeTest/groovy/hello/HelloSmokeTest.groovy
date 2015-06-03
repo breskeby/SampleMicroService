@@ -14,20 +14,10 @@ class HelloSmokeTest extends GebSpec {
         when:
         go "http://serene-eyrie-2685.herokuapp.com/"
         then:
-        driver.pageSource.contains("version ${versionUnderTest()}")
+        driver.pageSource.contains("version ${expectedVersion()}")
     }
 
-    private String versionUnderTest() {
-        try {
-            final URL resource = getClass().getClassLoader().getResource("hello/versioninfo.properties");
-            Properties props = new Properties()
-            props.load(resource.openConnection().inputStream)
-            return props.getProperty("version");
-        } catch (IOException E) {
-            // handle
-        }
-        return "[unknown]";
+    private String expectedVersion() {
+        return System.getProperty("expectedVersion")
     }
-
-
 }
