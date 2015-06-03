@@ -31,7 +31,7 @@ targetCompatibility = 1.8
 
 dependencies {
 	
-	compile 'org.acme.test.consumer:plugin:1.0-20140131.150112-1'
+	compile 'org.acme.test.consumer:plugin:1.0-SNAPSHOT'
 	compile "org.codehaus.groovy:groovy-all:2.3.10"
     compile("org.springframework.boot:spring-boot-starter-web") {
         exclude module: "spring-boot-starter-tomcat"
@@ -49,15 +49,18 @@ dependencies {
 }
 
 processResources {
-	def revision = file(".git/refs/heads/master").text
 	
 	inputs.property "version", project.version
-    inputs.property "revision", revision
 
+	filter(org.apache.tools.ant.filters.ReplaceTokens, tokens: [version: project.version])
+	
+	/*
+	def revision = file(".git/refs/heads/master").text
+    inputs.property "revision", revision
 	filter(org.apache.tools.ant.filters.ReplaceTokens, 
-		tokens: [version: project.version,
-				 revision: revision]
+		tokens: [revision: revision]
 	)
+	*/
 }
 
 
