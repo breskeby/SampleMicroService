@@ -27,6 +27,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
+	compile "org.acme:someLib:1.0-SNAPSHOT"
     compile "org.codehaus.groovy:groovy-all:2.3.10"
     compile("org.springframework.boot:spring-boot-starter-web") {
         exclude module: "spring-boot-starter-tomcat"
@@ -44,12 +45,13 @@ dependencies {
 }
 
 processResources {
-    filter(org.apache.tools.ant.filters.ReplaceTokens, tokens: [version: project.version])
+    filter(org.apache.tools.ant.filters.ReplaceTokens, 
+		tokens: [version: project.version,
+				 revision: file(".git/refs/heads/master").text]
+	)
 }
 
 
 updateVersion.dependsOn deploy, smokeTest
 
 smokeTest.mustRunAfter deploy
-
-updateVersion << { throw new GradleException("let the build fail") }
