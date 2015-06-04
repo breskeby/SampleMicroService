@@ -1,0 +1,22 @@
+task checkForOpenIssues(type: IssueChecker)
+beforeReleaseBuild.dependsOn CheckForOpenIssues
+
+class IssueChecker extends DefaultTask {
+
+    String url = "https://api.github.com/repos/breskeby/SampleMicroService/milestones"
+
+	@TaskAction
+    void validate() {
+        String json = new URL(url).text
+		def currentRelease = new groovy.json.JsonSlurper().parseText(json).find { entry ->
+            entry.title == project.version.releaseVersion().toString()
+        }
+        if(currentRelease!=null){
+            assert currentRelease.state == "open"
+            if(currentRelease.open_issues != 0){
+                throw new GradleException("Cannot release version '${project.version.toString()}' with unresolved issues. Number of open issues: ${currentRelease.open_issues}\n" +
+                                          "See https://github.com/breskeby/gradle-jumper/issues?milestone=${currentRelease.number}&state=open/ for details!")
+            }
+        }
+    }
+}
