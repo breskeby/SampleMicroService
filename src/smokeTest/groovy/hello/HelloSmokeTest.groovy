@@ -14,7 +14,7 @@ class HelloSmokeTest extends GebSpec {
         when:
         go "http://serene-eyrie-2685.herokuapp.com/"
         then:
-        driver.pageSource.contains("v. <em>${expectedVersion()}</em> ")
+        driver.pageSource.contains("v. <em>${expectedVersion()}</em>")
     }
 
     private String expectedVersion() {
