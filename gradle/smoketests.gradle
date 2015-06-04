@@ -77,3 +77,8 @@ task smokeTestRelease(type:Test) {
         junitXml.destination = file("$buildDir/test-results/$name")
     }
 }
+
+
+
+updateVersion.dependsOn deploy, smokeTestRelease
+smokeTestRelease.mustRunAfter deploy

@@ -14,9 +14,9 @@ plugins {
 apply plugin: 'groovy'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
-apply from: "gradle/autoversioning.gradle"
-apply from: 'gradle/smoketests.gradle'
-apply from: "gradle/herokuDeploy.gradle"
+// apply from: "gradle/autoversioning.gradle"
+// apply from: 'gradle/smoketests.gradle'
+// apply from: "gradle/herokuDeploy.gradle"
 
 
 repositories {
@@ -31,7 +31,7 @@ targetCompatibility = 1.8
 
 dependencies {
 	
-	//compile 'org.acme.test.consumer:plugin:1.0-SNAPSHOT'
+	compile 'org.acme.test.consumer:plugin:1.0-SNAPSHOT'
 	compile "org.codehaus.groovy:groovy-all:2.3.10"
     compile("org.springframework.boot:spring-boot-starter-web") {
         exclude module: "spring-boot-starter-tomcat"
@@ -41,11 +41,12 @@ dependencies {
     testCompile "junit:junit"
 	testCompile "org.springframework.boot:spring-boot-starter-test"
 
+/*
     smokeTestCompile "org.gebish:geb-core:0.9.3"
     smokeTestCompile "org.seleniumhq.selenium:selenium-chrome-driver:2.41.0"
     smokeTestCompile "org.seleniumhq.selenium:selenium-support:2.41.0"
     smokeTestCompile "org.gebish:geb-spock:0.9.3"
-    smokeTestCompile "org.spockframework:spock-core:1.0-groovy-2.3"
+    smokeTestCompile "org.spockframework:spock-core:1.0-groovy-2.3"*/
 }
 
 processResources {
@@ -53,16 +54,4 @@ processResources {
 	inputs.property "version", project.version
 
 	filter(org.apache.tools.ant.filters.ReplaceTokens, tokens: [version: project.version])
-	
-	/*
-	def revision = file(".git/refs/heads/master").text
-    inputs.property "revision", revision
-	filter(org.apache.tools.ant.filters.ReplaceTokens, 
-		tokens: [revision: revision]
-	)
-	*/
 }
-
-
-updateVersion.dependsOn deploy, smokeTestRelease
-smokeTestRelease.mustRunAfter deploy
