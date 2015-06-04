@@ -17,6 +17,7 @@ apply plugin: 'spring-boot'
 apply from: "gradle/autoversioning.gradle"
 apply from: "gradle/herokuDeploy.gradle"
 apply from: 'gradle/smoketests.gradle'
+apply from: 'gradle/issuetracker'
 
 
 repositories {
