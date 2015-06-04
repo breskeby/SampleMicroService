@@ -71,7 +71,6 @@ task smokeTestRelease(type:Test) {
     def chromedriverFilename = Os.isFamily(Os.FAMILY_WINDOWS) ? "chromedriver.exe" : "chromedriver"
     systemProperty "webdriver.chrome.driver", new File(unzipChromeDriver.outputs.files.singleFile, chromedriverFilename).absolutePath
 
-
     reports {
         html.destination = reporting.file("$name/tests")
         junitXml.destination = file("$buildDir/test-results/$name")
@@ -80,5 +79,5 @@ task smokeTestRelease(type:Test) {
 
 
 
-updateVersion.dependsOn deploy, smokeTestRelease
+updateVersion.dependsOn smokeTestRelease
 smokeTestRelease.mustRunAfter deploy
