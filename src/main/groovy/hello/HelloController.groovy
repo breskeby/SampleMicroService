@@ -29,8 +29,8 @@ class HelloController {
 
                height: 100%;
 
-               background: #405c72;
-               background-color: #405c72;
+               background: #1F2D38;
+               background-color: #1F2D38;
 
                font-family: 'Lato', sans-serif;
                font-size: 36px;
@@ -55,7 +55,8 @@ class HelloController {
             <p align="center">
                 <h1 color="white">$welcomeMessage</h1>
                 Weather: ${weather.description}<br/>
-            </p>
+            </p> <br/><br/><br/>
+            <img src="bg_intro.png">
             <div class="push"></div>
         </div>
         <div class="footer">
