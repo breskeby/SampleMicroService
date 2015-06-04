@@ -9,7 +9,7 @@ class IssueChecker extends DefaultTask {
     void validate() {
         String json = new URL(url).text
 		def currentRelease = new groovy.json.JsonSlurper().parseText(json).find { entry ->
-            entry.title == project.version.releaseVersion().toString()
+            entry.title == project.version
         }
         if(currentRelease!=null){
             assert currentRelease.state == "open"
