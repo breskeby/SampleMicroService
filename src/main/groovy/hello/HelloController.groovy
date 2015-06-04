@@ -54,7 +54,7 @@ class HelloController {
         <div class="wrapper">
             <p align="center">
                 <h1 color="white">$welcomeMessage</h1>
-                Weather: ${weather.description}<br/>
+                Weather (Santa Clara): ${weather.description} (${(int) weather.temperature} °C)<br/>
             </p> <br/><br/><br/>
             <img src="bg_intro.png">
             <div class="push"></div>
@@ -85,7 +85,11 @@ class HelloController {
             def json = body.substring(body.indexOf("{"), body.lastIndexOf(")"));
             def slurper = new JsonSlurper().parseText(json)
 
-            return [description: slurper.weather.description[0]]
+            def description = slurper.weather.description[0];
+            println slurper.main.temp
+            def temperatur = slurper.main.temp - 273.15
+            return [description: description,
+                    temperature: temperatur]
         }catch(HttpServerErrorException exception){
             return [description: "Weather Service is Down"]
         }
