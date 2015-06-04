@@ -1,5 +1,0 @@
-task deploy(type:Exec){
-	dependsOn createReleaseTag
-	executable "git"
-	args "push", "heroku", "master"
-}

@@ -14,9 +14,9 @@ plugins {
 apply plugin: 'groovy'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
-// apply from: "gradle/autoversioning.gradle"
-// apply from: 'gradle/smoketests.gradle'
+apply from: "gradle/autoversioning.gradle"
 // apply from: "gradle/herokuDeploy.gradle"
+// apply from: 'gradle/smoketests.gradle'
 
 
 repositories {
@@ -30,8 +30,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
-	
-	compile 'org.acme.test.consumer:plugin:1.0-SNAPSHOT'
+	//compile 'org.acme.test.consumer:plugin:1.0-SNAPSHOT'
 	compile "org.codehaus.groovy:groovy-all:2.3.10"
     compile("org.springframework.boot:spring-boot-starter-web") {
         exclude module: "spring-boot-starter-tomcat"
