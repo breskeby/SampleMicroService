@@ -1,5 +1,5 @@
 task checkForOpenIssues(type: IssueChecker)
-beforeReleaseBuild.dependsOn CheckForOpenIssues
+beforeReleaseBuild.dependsOn checkForOpenIssues
 
 class IssueChecker extends DefaultTask {
 
