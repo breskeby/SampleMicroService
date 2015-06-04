@@ -86,7 +86,6 @@ class HelloController {
             def slurper = new JsonSlurper().parseText(json)
 
             def description = slurper.weather.description[0];
-            println slurper.main.temp
             def temperatur = slurper.main.temp - 273.15
             return [description: description,
                     temperature: temperatur]
